@@ -1,14 +1,13 @@
 {
   "name": "virtual-pro-tour",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
-  "homepage": "https://your-username.github.io/virtual-pro-tour",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "vite build && git add docs -f && git commit -m \"Deploy to GitHub Pages\" && git push"
   },
   "dependencies": {
     "react": "^18.2.0",
