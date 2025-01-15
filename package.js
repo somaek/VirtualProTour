@@ -1,13 +1,14 @@
 {
   "name": "virtual-pro-tour",
-  "private": false,
+  "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && cp -r public/data docs/",
     "preview": "vite preview",
-    "deploy": "vite build && git add docs -f && git commit -m \"Deploy to GitHub Pages\" && git push"
+    "clean": "rm -rf docs",
+    "deploy": "npm run clean && npm run build && git add docs -f && git commit -m \"Deploy to GitHub Pages\" && git push"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -16,11 +17,12 @@
     "lucide-react": "^0.263.1"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.0.0",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
     "autoprefixer": "^10.4.14",
-    "gh-pages": "^5.0.0",
-    "postcss": "^8.4.23",
-    "tailwindcss": "^3.3.2",
-    "vite": "^4.3.2"
+    "postcss": "^8.4.27",
+    "tailwindcss": "^3.3.3",
+    "vite": "^4.4.5"
   }
 }
