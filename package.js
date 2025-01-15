@@ -5,10 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && cp -r public/data docs/",
+    "build": "vite build",
     "preview": "vite preview",
-    "clean": "rm -rf docs",
-    "deploy": "npm run clean && npm run build && git add docs -f && git commit -m \"Deploy to GitHub Pages\" && git push"
+    "deploy": "npm run build && git add docs -f && git commit -m \"Deploy to GitHub Pages\" && git push"
   },
   "dependencies": {
     "react": "^18.2.0",
