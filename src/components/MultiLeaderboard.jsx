@@ -161,9 +161,9 @@ const MultiLeaderboard = () => {
   
   const leaderboards = [
     { id: 'overall', name: 'Overall Points', fileName: 'overall-points.csv' },
-    { id: 'stage', name: 'Stage Points', fileName: 'stage-points.csv' },
-    { id: 'gc', name: 'GC Points', fileName: 'gc-points.csv' },
-    { id: 'classics', name: 'Classics Points', fileName: 'classics-points.csv' }
+    { id: 'Platinum', name: 'Platinum', fileName: 'platinum-points.csv' },
+    { id: 'GSB', name: 'Gold-Silver-Bronze', fileName: 'gsb-points.csv' },
+    { id: 'Team', name: 'Team Points', fileName: 'team-points.csv' }
   ];
 
   return (
