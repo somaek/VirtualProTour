@@ -7,17 +7,24 @@ const LeaderboardTable = ({ fileName }) => {
   const [sortConfig, setSortConfig] = useState({ key: '#', direction: 'asc' });
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log('Fetching data from:', `/data/${fileName}`);
         const response = await fetch(`/data/${fileName}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const text = await response.text();
+        console.log('Received CSV data:', text.slice(0, 100) + '...');
         
         Papa.parse(text, {
           header: false,
           skipEmptyLines: true,
           complete: (results) => {
+            console.log('Parsed data:', results);
             // Find the header row (the one with "#" in first column)
             const headerRowIndex = results.data.findIndex(row => row[0] === '#');
             if (headerRowIndex >= 0) {
@@ -30,22 +37,53 @@ const LeaderboardTable = ({ fileName }) => {
                 return obj;
               });
               setData(rows);
+            } else {
+              setError('Could not find header row in CSV');
             }
             setLoading(false);
           },
           error: (error) => {
             console.error('Error parsing CSV:', error);
+            setError('Error parsing CSV file');
             setLoading(false);
           }
         });
       } catch (error) {
         console.error('Error fetching file:', error);
+        setError(`Error loading data: ${error.message}`);
         setLoading(false);
       }
     };
 
     fetchData();
   }, [fileName]);
+
+  if (loading) {
+    return (
+      <div className="text-center p-4">
+        <div className="text-lg">Loading...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center p-4">
+        <div className="text-red-500">{error}</div>
+        <div className="text-sm text-gray-500 mt-2">
+          Check browser console for more details
+        </div>
+      </div>
+    );
+  }
+
+  if (!data.length) {
+    return (
+      <div className="text-center p-4">
+        <div className="text-lg">No data available</div>
+      </div>
+    );
+  }
 
   const sortData = (key) => {
     setSortConfig((current) => {
